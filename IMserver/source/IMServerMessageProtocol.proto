@@ -1,0 +1,153 @@
+syntax = "proto3";
+
+package com.james.im.message;
+
+option java_package = "com.james.im.message";
+option java_outer_classname = "IMServerMessageProtocol";
+option objc_class_prefix = "IMPB";
+
+
+
+//消息类型
+enum MessageType {
+	CONNECT_INIT_REQ = 0;				//连接初始化请求
+	CONNECT_INIT_RES = 1;				//连接初始化响应
+	HEARTBEAT_REQ = 2;					//连接心跳请求
+	HEARTBEAT_RES = 3;					//连接心跳响应
+	SERVER_ACK = 4;						//队列消息收到确认回复（服务端返回给客户端）
+	CLIENT_ACK = 5;						//队列消息收到确认回复（客户端返回给服务端）
+	BASE_MSG = 6;						//对话消息
+	OTHER_MSG  = 7;						//其他消息
+}
+
+//消息类型枚举
+enum ContentType {
+	TEXT  = 0;						//文本
+	FACE  = 1;						//表情
+	IMAGE = 2;						//图片
+	AUDIO = 3;						//语音
+	VIDEO = 4;						//视频
+	FILE  = 5;						//文件
+}
+
+//连接初始化结果
+enum ConnectInitResultCode {
+	FAIL = 0;						//连接初始化失败
+	SUCCESS = 1;					//连接初始化成功
+}
+
+//连接初始化消息
+message ConnectInitRequest {
+	string protocol_version = 1;				//长连接协议版本号
+	string user_id = 2;					//用户userId
+	string network_environment= 3;		//当前客户端网络环境
+	
+}
+
+
+//连接初始化响应
+message ConnectInitResponse {
+	ConnectInitResultCode code = 1;				//连接初始化结果
+	string heartbeat_interval_time = 2;			//心跳间隔时间
+	string heartbeat_interval_timeout = 3;		//心跳超时时间
+	
+}
+
+
+//服务端返回给客户端的Ack
+message ServerAck {
+	string clientMessageId = 1;				//客户端生成的消息唯一标识
+	string messageId = 2;					//服务端生成的消息唯一标识
+}
+
+
+//客户端返回给服务端的Ack
+message ClientAck {
+	string message_id = 1;					//服务端生成的消息唯一标识
+	string userId = 2;					//消息对应的userId
+}
+
+
+//心跳请求
+message HeartbeatRequest {
+
+}
+
+//心跳响应
+message HeartbeatResponse {
+
+}
+
+
+
+
+//基于队列的消息
+message BaseMessage {
+	string client_message_id = 1;				//客户端消息唯一标识
+	string message_id = 2;					//服务端消息唯一标识
+	string from_user_id = 3;					//消息发送者userId
+	string to_user_id = 5;					//消息接收者userId
+	string time = 8;					//消息时间
+}
+
+//对话消息
+message Message{
+	BaseMessage basemessage = 1;			//队列消息
+	ContentType content_type = 2;				//消息内容类型
+	bytes message_content = 3;				//消息内容
+}
+
+//文件
+message File {
+	string name = 1;					//文件名称
+	string url = 2;						//文件url
+	uint32 size = 3;					//文件大小，单位：字节长度
+	bytes content = 4;					//文件内容
+}
+
+//表情
+message Face {
+	string name = 1;					//表情名称，唯一标识
+	string url = 2;						//表情图片文件url
+	uint32 size = 3;					//表情图片文件大小，单位：字节
+	bytes content = 4;					//表情图片文件内容
+	repeated string tag = 5;			//表情标签
+	uint32 width = 6;					//表情图片宽，单位：像素（px）
+	uint32 height = 7;					//表情图片高，单位：像素（px）
+}
+
+//图片
+message Image {
+	string name = 1;					//图片文件名称
+	string url = 2;						//图片原图文件url
+	uint32 size = 3;					//图片原图文件大小，单位：字节
+	bytes content = 4;					//图片缩略图文件内容
+	string img_url = 5;					//图片缩略图文件url
+	uint32 width = 6;					//图片缩略图宽，单位：像素（px）
+	uint32 height = 7;					//图片缩略图高，单位：像素（px）
+}
+
+//语音
+message Audio {
+	string name = 1;					//语音文件名称
+	string url = 2;						//语音文件url
+	uint32 size = 3;					//语音文件大小，单位：字节
+	bytes content = 4;					//语音文件内容
+	uint32 duration = 5;					//语音持续时长
+}
+
+//小视频
+message Video {
+	string name = 1;					//视频文件名称
+	string url = 2;						//视频文件url
+	uint32 size = 3;					//视频文件大小，单位：字节
+	bytes content = 4;					//视频缩略图文件内容
+	uint32 duration = 5;				//视频持续时长
+	string img_url = 6;					//视频缩略图文件url
+	uint32 width = 7;					//视频缩略图宽，单位：像素（px）
+	uint32 height = 8;					//视频缩略图高，单位：像素（px）
+}
+
+
+
+
