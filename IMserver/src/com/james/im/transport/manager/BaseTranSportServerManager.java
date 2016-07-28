@@ -15,7 +15,6 @@ public class BaseTranSportServerManager extends ServerManager {
 	
 	
 	
-	
 	public BaseTranSportServerManager() {
 		// TODO Auto-generated constructor stub
 		baseTranSportServer = BaseTranSportServer.newInstance();

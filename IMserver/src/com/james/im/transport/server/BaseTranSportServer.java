@@ -46,6 +46,7 @@ public class BaseTranSportServer implements IServer {
 	@Override
 	public boolean checkServer() {
 		// TODO Auto-generated method stub
+		MiniLog.d(TAG, "check server");
 		if(serverInfo != null){
 			return serverInfo.port > 1024 && serverInfo.connNumber != 0;
 		}
@@ -56,6 +57,7 @@ public class BaseTranSportServer implements IServer {
 	@Override
 	public void bindServer() {
 		// TODO Auto-generated method stub
+		MiniLog.d(TAG, "bind server");
 		try {
 			serverSocket = ServerSocketFactory.getDefault().createServerSocket(serverInfo.port);
 			
@@ -75,10 +77,10 @@ public class BaseTranSportServer implements IServer {
 	@Override
 	public void listenServer() {
 		// TODO Auto-generated method stub
-		Socket mSocket;
+		MiniLog.d(TAG, "listen server");
 			do{
 				try {
-					mSocket = serverSocket.accept();
+					Socket mSocket = serverSocket.accept();
 					init(mSocket);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -97,12 +99,12 @@ public class BaseTranSportServer implements IServer {
 	@Override
 	public void destroyServer() {
 		// TODO Auto-generated method stub
-		
+		MiniLog.d(TAG, "destroy server");
 	}
 	
 	private void init(Socket socket) {
 		// TODO Auto-generated method stub
-		
+		MiniLog.d(TAG, "socket init");
 	}
 
 	public ServerInfo getServerInfo() {
