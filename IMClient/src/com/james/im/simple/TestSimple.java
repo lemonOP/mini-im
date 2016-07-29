@@ -16,7 +16,7 @@ public class TestSimple {
 				LongLinkServer
 				.Builder()
 				.host("localhost")
-				.port(9501)
+				.port(9001)
 				.packetHandlerReceiver(new PacketHandlerReceiver())
 				.build();
 		longLinkServer.settingAddress();

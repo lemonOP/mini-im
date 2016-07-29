@@ -1,4 +1,4 @@
-package com.james.im.connection.channel;
+package com.james.im.transport.connection.channel;
 
 import java.io.InputStream;
 import java.io.OutputStream;
