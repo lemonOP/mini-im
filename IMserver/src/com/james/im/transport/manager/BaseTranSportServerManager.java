@@ -1,5 +1,6 @@
 package com.james.im.transport.manager;
 
+import com.james.im.transport.connection.ConnectionPool;
 import com.james.im.transport.server.BaseTranSportServer;
 
 
@@ -13,16 +14,18 @@ public class BaseTranSportServerManager extends ServerManager {
 	
 	private BaseTranSportServer baseTranSportServer;
 	
-	
+	private ConnectionPool pool ;
 	
 	public BaseTranSportServerManager() {
 		// TODO Auto-generated constructor stub
 		baseTranSportServer = BaseTranSportServer.newInstance();
+		pool = ConnectionPool.newInstance();
 	}
 
 	@Override
 	public void sync() {
 		// TODO Auto-generated method stub
+		baseTranSportServer.setPool(pool);
 		baseTranSportServer.setServerInfo(getServerInfo());
 		if(baseTranSportServer.checkServer()){
 			baseTranSportServer.bindServer();
@@ -30,6 +33,8 @@ public class BaseTranSportServerManager extends ServerManager {
 		}
 	}
 
+	
+	
 
 
 	

@@ -9,6 +9,10 @@ import javax.net.ServerSocketFactory;
 import com.james.im.execption.IMServerConnectionException;
 import com.james.im.execption.IMServerException;
 import com.james.im.info.ServerInfo;
+import com.james.im.transport.connection.Connection;
+import com.james.im.transport.connection.ConnectionPool;
+import com.james.im.transport.connection.channel.BaseChannel;
+import com.james.im.transport.connection.channel.Channel;
 import com.james.minilog.MiniLog;
 
 /**
@@ -25,6 +29,8 @@ public class BaseTranSportServer implements IServer {
 	private ServerInfo serverInfo;
 	
 	private ServerSocket serverSocket;
+	
+	private ConnectionPool pool;
 	
 	private static final String TAG = BaseTranSportServer.class.getSimpleName();
 	
@@ -48,7 +54,7 @@ public class BaseTranSportServer implements IServer {
 		// TODO Auto-generated method stub
 		MiniLog.d(TAG, "check server");
 		if(serverInfo != null){
-			return serverInfo.port > 1024 && serverInfo.connNumber != 0;
+			return serverInfo.port > 1024 && serverInfo.connNumber != 0 ;
 		}
 		return false;
 	}
@@ -96,17 +102,46 @@ public class BaseTranSportServer implements IServer {
 	}
 
 
+	private void init(Socket socket) {
+		// TODO Auto-generated method stub
+		MiniLog.d(TAG, "socket init");
+		
+		Channel channel=  new BaseChannel();
+		channel.createChannel(socket);
+		Connection conn = new Connection();
+		conn.setChannel(channel);
+		
+		this.pool.add(channel.createConnTempId(conn.getChannel().getSocket()), conn);
+		
+	}
+
+
 	@Override
 	public void destroyServer() {
 		// TODO Auto-generated method stub
 		MiniLog.d(TAG, "destroy server");
+		if(serverSocket != null){
+			try{
+				if(!serverSocket.isClosed())
+					serverSocket.close();
+					serverSocket = null;
+			}catch(Exception e){
+				try {
+					throw new IMServerException(e);
+				} catch (IMServerException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+		if(this.pool != null)
+			this.pool.shutdown();
+		//TODO 这里只是清除temp connection  和当前服务还需要清除temp 转向 Official的所有链接
+		
 	}
 	
-	private void init(Socket socket) {
-		// TODO Auto-generated method stub
-		MiniLog.d(TAG, "socket init");
-	}
-
+	
 	public ServerInfo getServerInfo() {
 		return serverInfo;
 	}
@@ -117,6 +152,17 @@ public class BaseTranSportServer implements IServer {
 	}
 
 
+	public ConnectionPool getPool() {
+		return pool;
+	}
+
+
+	public void setPool(ConnectionPool pool) {
+		this.pool = pool;
+	}
+
+
+	
 
 
 

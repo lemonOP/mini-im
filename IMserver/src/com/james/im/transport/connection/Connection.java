@@ -1,5 +1,7 @@
 package com.james.im.transport.connection;
 
+import com.james.im.packet.PacketReader;
+import com.james.im.packet.PacketWrite;
 import com.james.im.transport.connection.channel.Channel;
 
 
@@ -11,8 +13,11 @@ import com.james.im.transport.connection.channel.Channel;
 public class Connection  {
 
 	
+	@SuppressWarnings("unused")
 	private static final String TAG = Connection.class.getSimpleName();
 	
+	private PacketReader packetReader;
+	private PacketWrite packetWrite;
 	
 	private Channel channel;
 	
@@ -29,6 +34,22 @@ public class Connection  {
 	public void setChannel(Channel channel) {
 		this.channel = channel;
 	}
+	
+	
+	public void init(){
+		packetReader = new PacketReader(this.getChannel());
+		packetWrite = new PacketWrite(this.getChannel());
+	}
+	
+	
+	public void shutdown(){
+		if(packetReader != null) packetReader.shutdown();
+		if(packetWrite != null) packetWrite.shutdown();
+		if(channel != null) channel.shutdown();
+	}
+	
+	
+	
 	
 	
 	
