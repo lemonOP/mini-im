@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.james.im.execption.IMConnectionException;
 import com.james.minilog.MiniLog;
@@ -22,8 +25,11 @@ public class ConnectionPool {
 
 	private static final int CONNECTION_NUMBER = 10;
 
-	private static Map<String, Connection> connectionPool = new ConcurrentHashMap<>(
+	private volatile static Map<String, Connection> connectionPool = new ConcurrentHashMap<>(
 			CONNECTION_NUMBER);
+	private ReadWriteLock rw = new ReentrantReadWriteLock();
+	private Lock w = rw.writeLock();
+	private Lock r = rw.readLock();
 
 	public ConnectionPool() {
 
@@ -44,6 +50,7 @@ public class ConnectionPool {
 			boolean isContains = connectionPool.containsKey(key);
 			if (isContains) {
 				remove(key);
+				w.lock();
 				connectionPool.put(key, value);
 			} else {
 				connectionPool.put(key, value);
@@ -58,8 +65,34 @@ public class ConnectionPool {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		} finally {
+			w.unlock();
 		}
 		return 0;
+	}
+
+	/**
+	 * 获取连接点
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Connection get(String key) {
+		if (connectionPool.size() > CONNECTION_NUMBER)
+			return null;
+		boolean isContains = connectionPool.containsKey(key);
+
+		if (isContains) {
+			r.lock();
+			try {
+
+				return connectionPool.get(key);
+			} finally {
+				r.unlock();
+			}
+
+		}
+		return null;
 	}
 
 	/**
@@ -75,7 +108,9 @@ public class ConnectionPool {
 				return 0;
 			boolean isContains = connectionPool.containsKey(key);
 			if (isContains) {
-				connectionPool.remove(key);
+				synchronized (this) {
+					connectionPool.remove(key);
+				}
 				return connectionPool.size();
 			}
 			MiniLog.d(TAG, "connectionPool remove key=" + key
@@ -101,8 +136,6 @@ public class ConnectionPool {
 		}
 
 	}
-	
-	
 
 	public static Map<String, Connection> getConnectionPool() {
 		return connectionPool;
