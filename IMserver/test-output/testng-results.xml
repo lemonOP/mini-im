@@ -2,32 +2,32 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="221" started-at="2016-07-26T14:34:07Z" finished-at="2016-07-26T14:34:08Z">
+  <suite name="Default suite" duration-ms="293" started-at="2016-07-31T07:44:47Z" finished-at="2016-07-31T07:44:47Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="221" started-at="2016-07-26T14:34:07Z" finished-at="2016-07-26T14:34:08Z">
-      <class name="com.james.im.simple.test.IMServerTest">
-        <test-method status="PASS" signature="beforeClass()[pri:0, instance:com.james.im.simple.test.IMServerTest@31b191c4]" name="beforeClass" is-config="true" duration-ms="10" started-at="2016-07-26T22:34:07Z" finished-at="2016-07-26T22:34:07Z">
+    <test name="Default test" duration-ms="293" started-at="2016-07-31T07:44:47Z" finished-at="2016-07-31T07:44:47Z">
+      <class name="com.james.im.simple.test.ReflectTest">
+        <test-method status="PASS" signature="beforeClass()[pri:0, instance:com.james.im.simple.test.ReflectTest@5aa8a3a6]" name="beforeClass" is-config="true" duration-ms="12" started-at="2016-07-31T15:44:47Z" finished-at="2016-07-31T15:44:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeClass -->
-        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:com.james.im.simple.test.IMServerTest@31b191c4]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2016-07-26T22:34:07Z" finished-at="2016-07-26T22:34:07Z">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:com.james.im.simple.test.ReflectTest@5aa8a3a6]" name="beforeMethod" is-config="true" duration-ms="0" started-at="2016-07-31T15:44:47Z" finished-at="2016-07-31T15:44:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="f()[pri:0, instance:com.james.im.simple.test.IMServerTest@31b191c4]" name="f" duration-ms="179" started-at="2016-07-26T22:34:07Z" finished-at="2016-07-26T22:34:08Z">
+        <test-method status="PASS" signature="reflectTest()[pri:0, instance:com.james.im.simple.test.ReflectTest@5aa8a3a6]" name="reflectTest" duration-ms="241" started-at="2016-07-31T15:44:47Z" finished-at="2016-07-31T15:44:47Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- f -->
-        <test-method status="PASS" signature="afterMethod()[pri:0, instance:com.james.im.simple.test.IMServerTest@31b191c4]" name="afterMethod" is-config="true" duration-ms="0" started-at="2016-07-26T22:34:08Z" finished-at="2016-07-26T22:34:08Z">
+        </test-method> <!-- reflectTest -->
+        <test-method status="PASS" signature="afterMethod()[pri:0, instance:com.james.im.simple.test.ReflectTest@5aa8a3a6]" name="afterMethod" is-config="true" duration-ms="2" started-at="2016-07-31T15:44:47Z" finished-at="2016-07-31T15:44:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterMethod -->
-        <test-method status="PASS" signature="afterClass()[pri:0, instance:com.james.im.simple.test.IMServerTest@31b191c4]" name="afterClass" is-config="true" duration-ms="0" started-at="2016-07-26T22:34:08Z" finished-at="2016-07-26T22:34:08Z">
+        <test-method status="PASS" signature="afterClass()[pri:0, instance:com.james.im.simple.test.ReflectTest@5aa8a3a6]" name="afterClass" is-config="true" duration-ms="1" started-at="2016-07-31T15:44:47Z" finished-at="2016-07-31T15:44:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterClass -->
-      </class> <!-- com.james.im.simple.test.IMServerTest -->
+      </class> <!-- com.james.im.simple.test.ReflectTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

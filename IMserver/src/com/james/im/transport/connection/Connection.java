@@ -39,6 +39,7 @@ public class Connection  {
 	public void init(){
 		packetReader = new PacketReader(this.getChannel());
 		packetWrite = new PacketWrite(this.getChannel());
+		
 	}
 	
 	

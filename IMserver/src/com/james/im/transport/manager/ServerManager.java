@@ -14,8 +14,10 @@ public abstract class ServerManager {
 	
 	private ServerInfo serverInfo;
 	
-	public abstract void sync();
+	public abstract void sync(Class<?> clazz);
 
+	public abstract void server();
+	
 	ServerManager() {
 		// TODO Auto-generated constructor stub
 	}

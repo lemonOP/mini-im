@@ -1,4 +1,4 @@
-package com.james.im.transport.server;
+package com.james.im.transport.server.impl;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,6 +13,7 @@ import com.james.im.transport.connection.Connection;
 import com.james.im.transport.connection.ConnectionPool;
 import com.james.im.transport.connection.channel.BaseChannel;
 import com.james.im.transport.connection.channel.Channel;
+import com.james.im.transport.server.Server;
 import com.james.minilog.MiniLog;
 
 /**
@@ -20,17 +21,15 @@ import com.james.minilog.MiniLog;
  * @author james
  *
  */
-public class BaseTranSportServer implements IServer {
+public class BaseTranSportServer extends Server {
 
 	
 	
 	private static volatile BaseTranSportServer INSTANCE;
 	
-	private ServerInfo serverInfo;
-	
+
 	private ServerSocket serverSocket;
 	
-	private ConnectionPool pool;
 	
 	private static final String TAG = BaseTranSportServer.class.getSimpleName();
 	
@@ -53,7 +52,7 @@ public class BaseTranSportServer implements IServer {
 	public boolean checkServer() {
 		// TODO Auto-generated method stub
 		MiniLog.d(TAG, "check server");
-		if(serverInfo != null){
+		if(super.serverInfo != null){
 			return serverInfo.port > 1024 && serverInfo.connNumber != 0 ;
 		}
 		return false;
@@ -110,6 +109,7 @@ public class BaseTranSportServer implements IServer {
 		channel.createChannel(socket);
 		Connection conn = new Connection();
 		conn.setChannel(channel);
+		conn.init();
 		
 		this.pool.add(channel.createConnTempId(conn.getChannel().getSocket()), conn);
 		
@@ -137,29 +137,17 @@ public class BaseTranSportServer implements IServer {
 		
 		if(this.pool != null)
 			this.pool.shutdown();
-		//TODO 这里只是清除temp connection  和当前服务还需要清除temp 转向 Official的所有链接
+		/**
+		 * TODO 这里只是清除temp connection  和当前服务还需要清除temp 转向 Official的所有链接
+		 * 如果 Official 链接 得通知客户端链接 ，现在需要服务端需要关闭链接，请自己关闭链接好好躺着，并告知用户
+		 * 服务端网络出现异常或服务端维护中，请稍后再试
+		 * 再次逐个关闭 Official 链接
+ 		 * 
+		 */
 		
 	}
 	
 	
-	public ServerInfo getServerInfo() {
-		return serverInfo;
-	}
-
-
-	public void setServerInfo(ServerInfo serverInfo) {
-		this.serverInfo = serverInfo;
-	}
-
-
-	public ConnectionPool getPool() {
-		return pool;
-	}
-
-
-	public void setPool(ConnectionPool pool) {
-		this.pool = pool;
-	}
 
 
 	

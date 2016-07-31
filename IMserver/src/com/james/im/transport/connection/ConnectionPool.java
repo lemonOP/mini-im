@@ -155,7 +155,8 @@ public class ConnectionPool {
 	
 	
 	/**
-	 * shutdown
+	 * shutdown temp connection
+	 *  
 	 */
 	public void shutdown(){
 		if(tempconnectionPool != null && tempconnectionPool.size() > 0){

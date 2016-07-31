@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 import com.beust.jcommander.internal.Nullable;
+import com.james.im.config.ChannelConfig;
+import com.james.im.execption.IMConnectionException;
+import com.james.minilog.MiniLog;
 
 /**
  * 
@@ -16,6 +20,8 @@ import com.beust.jcommander.internal.Nullable;
  */
 public abstract class Channel {
 
+	
+	private static final String TAG = Channel.class.getSimpleName();
 	
 	private volatile Socket socket;
 
@@ -60,7 +66,9 @@ public abstract class Channel {
 	}
 
 	public void setSocket(Socket socket) {
+		
 		this.socket = socket;
+		
 	}
 
 	/**
@@ -93,6 +101,27 @@ public abstract class Channel {
 		
 	}
 	
+	/**
+	 * 设置socket 参数
+	 * 
+	 * @param socket
+	 */
+	public void settingChannel(Socket socket){
+		try {
+			
+			socket.setKeepAlive(ChannelConfig.KEEPALIVE);
+			socket.setSoTimeout(ChannelConfig.TIMEOUT);//TODO 先定义到2分钟 ，后面需要根据客户端的网络环境来进行链接超时时间
+			socket.setReceiveBufferSize(ChannelConfig.RECEIVEBUFFERSIZE);
+			socket.setSendBufferSize(ChannelConfig.SENDBUFFERSIZE);
+			socket.setTcpNoDelay(ChannelConfig.TCPNODELY);//Nagle算法关闭 false 开启
+			
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			MiniLog.e(TAG, e);
+			new IMConnectionException(e);
+		}
+		
+	}
 	
 	public void shutdown(){
 		if(inputStream != null){

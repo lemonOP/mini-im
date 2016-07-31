@@ -5,8 +5,9 @@ import com.james.im.bootloader.BaseBootLoader;
 import com.james.im.bootloader.IBootLoader;
 import com.james.im.bootloader.MiniTaskBootLoader;
 import com.james.im.info.ServerInfo;
-import com.james.im.transport.manager.BaseTranSportServerManager;
+import com.james.im.transport.manager.TranSportServerManager;
 import com.james.im.transport.manager.ServerManager;
+import com.james.im.transport.server.impl.BaseTranSportServer;
 import com.james.minilog.MiniLog;
 
 /**
@@ -114,10 +115,10 @@ public class MainServer implements IBootLoader {
 	
 	
 	public void baseSync(){
-		baseTranSportServerManager = new BaseTranSportServerManager();
+		baseTranSportServerManager = new TranSportServerManager();
 		baseTranSportServerManager.setmContext(mContext);
 		baseTranSportServerManager.setServerInfo(serverInfo);
-		baseTranSportServerManager.sync();
+		baseTranSportServerManager.sync(BaseTranSportServer.class);
 	}
 	
 	
