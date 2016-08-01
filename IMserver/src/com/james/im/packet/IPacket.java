@@ -6,7 +6,7 @@ package com.james.im.packet;
  * @author james
  *
  */
-public interface IPacketHandler {
+public interface IPacket {
 	
 	/**
 	 * 包处理

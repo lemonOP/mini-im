@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>IM SERVER</title>
+<title>IM</title>
 </head>
 <body>
 
-	<p>im server</p>
+	<img alt="图片" width="1000" height="750" src="./images/P5011120.jpg" />
+	
 </body>
 </html>
