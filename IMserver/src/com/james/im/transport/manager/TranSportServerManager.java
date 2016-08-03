@@ -41,6 +41,7 @@ public class TranSportServerManager extends ServerManager {
 		// TODO Auto-generated method stub
 		
 		server = serverFactory.createServer(clazz);
+		server();
 		
 	}
 	

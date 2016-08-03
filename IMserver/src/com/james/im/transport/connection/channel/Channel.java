@@ -97,7 +97,7 @@ public abstract class Channel {
 	 * 创建链接tempId
 	 */
 	public String createConnTempId(Socket socket) {
-		return socket != null ? Integer.toHexString(hashCode()) + "" : null;
+		return socket != null ? Integer.toHexString(socket.hashCode()) + "" : null;
 		
 	}
 	

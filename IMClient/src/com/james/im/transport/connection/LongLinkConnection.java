@@ -41,7 +41,7 @@ public class LongLinkConnection extends Connection {
 			
 			mSocket.setTcpNoDelay(ConnectionConfiguration.connectTcpNoDelay);
 			mSocket.setSoTimeout(ConnectionConfiguration.connectTimeOut);
-			
+			mSocket.setKeepAlive(true);
 			if (mSocket != null) {
 				init(mSocket);
 				return LongLinkConfiguration.CONNECTION_SUCCESS;

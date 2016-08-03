@@ -53,20 +53,10 @@ public class PacketUtil implements IUtil {
 	 * @return
 	 */
 	public int headBufferToMessageBodyLen(byte[] buffer) {
-		byte[] messageBodyLen = ArrayUtils.subarray(buffer, 0, 4);
+		byte[] messageBodyLen = ArrayUtils.subarray(buffer, 0, buffer.length);
 		return byteArrayToInt(messageBodyLen);
 	}
 
-	/**
-	 * 头buffer 转 messageType
-	 * 
-	 * @param buffer
-	 * @return
-	 */
-	public int headBufferToMessageType(byte[] buffer) {
-		byte[] messageTypeBuffer = ArrayUtils.subarray(buffer, 4, 5);
-		return messageTypeBuffer[0];
-	}
 
 	
 	/**

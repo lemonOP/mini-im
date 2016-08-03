@@ -41,7 +41,7 @@ public class MainServer implements IBootLoader {
 	/**
 	 * 基础协议服务管理
 	 */
-	private ServerManager baseTranSportServerManager;
+	private ServerManager tranSportServerManager;
 	
 	private ServerInfo serverInfo;
 	
@@ -115,10 +115,10 @@ public class MainServer implements IBootLoader {
 	
 	
 	public void baseSync(){
-		baseTranSportServerManager = new TranSportServerManager();
-		baseTranSportServerManager.setmContext(mContext);
-		baseTranSportServerManager.setServerInfo(serverInfo);
-		baseTranSportServerManager.sync(BaseTranSportServer.class);
+		tranSportServerManager = new TranSportServerManager();
+		tranSportServerManager.setmContext(mContext);
+		tranSportServerManager.setServerInfo(serverInfo);
+		tranSportServerManager.sync(BaseTranSportServer.class);
 	}
 	
 	

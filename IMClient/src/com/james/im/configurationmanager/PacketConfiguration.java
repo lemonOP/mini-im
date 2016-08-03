@@ -15,7 +15,7 @@ public class PacketConfiguration {
 	/**
 	 * 头部长度
 	 */
-	public static final int HEADLEN  = 5;
+	public static final int HEADLEN  = 4;
 	
 	
 	/**

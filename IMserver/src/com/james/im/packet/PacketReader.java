@@ -24,7 +24,7 @@ public class PacketReader implements IPacket {
 	public PacketReader(Channel channel) {
 		// TODO Auto-generated constructor stub
 		this.channel = channel;
-
+		handlerPacket();
 	}
 
 	@Override
@@ -42,8 +42,9 @@ public class PacketReader implements IPacket {
 					do {
 						
 						int tempHeadCount = inputStream.read(headBuffer, 0,headBuffer.length);
+						MiniLog.d(TAG, "tempHeadCount="+tempHeadCount);
 						if(tempHeadCount <=0){
-						//	handlerPacketException("SocketException", new SocketException(), longLinkConnectionListener);
+							handlerPacketException("SocketException", new SocketException());
 							break;
 						}
 						
@@ -56,7 +57,7 @@ public class PacketReader implements IPacket {
 										messageBodyArray, 0,
 										messageBodyArray.length);
 								if(tempMessageBodyCount <=0){
-									//handlerPacketException("SocketException", new SocketException(), longLinkConnectionListener);
+									handlerPacketException("SocketException", new SocketException());
 									break;
 								}
 								MiniLog.d(TAG, "tempMessageBodyCount"+tempMessageBodyCount);
@@ -81,13 +82,13 @@ public class PacketReader implements IPacket {
 					} while ( inputStream != null );
 
 				}catch(SocketTimeoutException e){
-					//handlerPacketException("SocketTimeoutException", e, longLinkConnectionListener);
+					handlerPacketException("SocketTimeoutException", e);
 				}catch(SocketException e){
-					//handlerPacketException("SocketException", e, longLinkConnectionListener);
+					handlerPacketException("SocketException", e);
 				}catch (IOException e) {
-					//handlerPacketException("IOException", e, longLinkConnectionListener);
+					handlerPacketException("IOException", e);
 				}catch(Exception  e){
-					//handlerPacketException("Exception", e, longLinkConnectionListener);
+					handlerPacketException("Exception", e);
 				}
 			}
 		});
@@ -105,7 +106,14 @@ public class PacketReader implements IPacket {
 	@Override
 	public void shutdown() {
 		// TODO Auto-generated method stub
-
+		if(this.channel != null){
+			try {
+				this.channel.getInputStream().close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

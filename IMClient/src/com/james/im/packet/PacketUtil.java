@@ -38,7 +38,7 @@ public class PacketUtil {
 	 */
 	public byte[] toBuffer(int head, int messageType,byte[] messageBodyBuffer) {
 		
-		byte[] headBuffer = intToByteArray(head+PacketConfiguration.HEADLEN);
+		byte[] headBuffer = intToByteArray(head);
 		byte[] messageTypeBuffer = {(byte) messageType};
 		byte[] tempheadBuffer = ArrayUtils.addAll(headBuffer, messageTypeBuffer);
 		byte[] packetBuffer = ArrayUtils.addAll(tempheadBuffer,messageBodyBuffer);

@@ -26,6 +26,7 @@ public class PacketWrite implements IPacket {
 	public PacketWrite(Channel channel) {
 		// TODO Auto-generated constructor stub
 		this.channel = channel;
+		handlerPacket();
 	}
 
 	@Override
@@ -81,7 +82,14 @@ public class PacketWrite implements IPacket {
 	@Override
 	public void shutdown() {
 		// TODO Auto-generated method stub
-
+		if(this.channel.getOutputStream() != null){
+			try {
+				this.channel.getOutputStream().close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

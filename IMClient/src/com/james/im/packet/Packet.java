@@ -35,7 +35,6 @@ public class Packet {
 	 */
 	public void setInHead(byte[] buffer){
 		this.messageLen = PacketUtil.newInstance().headBufferToMessageBodyLen(buffer);
-		this.messageType = PacketUtil.newInstance().headBufferToMessageType(buffer);
 	}
 	
 	/**

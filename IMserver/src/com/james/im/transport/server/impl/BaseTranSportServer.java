@@ -111,7 +111,7 @@ public class BaseTranSportServer extends Server {
 		conn.setChannel(channel);
 		conn.init();
 		
-		this.pool.add(channel.createConnTempId(conn.getChannel().getSocket()), conn);
+		this.pool.add(channel.createConnTempId(socket), conn);
 		
 	}
 

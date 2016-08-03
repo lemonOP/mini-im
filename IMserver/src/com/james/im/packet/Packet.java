@@ -1,6 +1,7 @@
 package com.james.im.packet;
 
 import com.james.im.util.PacketUtil;
+import com.james.minilog.MiniLog;
 
 /**
  * 数据包
@@ -24,6 +25,7 @@ public class Packet {
 	 */
 	private byte[] messageBody;
 	
+	private static final String TAG = Packet.class.getSimpleName();
 	
 	public Packet() {
 		// TODO Auto-generated constructor stub
@@ -37,7 +39,7 @@ public class Packet {
 	 */
 	public void setInHead(byte[] buffer){
 		this.messageLen = PacketUtil.newInstance().headBufferToMessageBodyLen(buffer);
-		this.messageType = PacketUtil.newInstance().headBufferToMessageType(buffer);
+		MiniLog.d(TAG, "this.messageLen ="+this.messageLen);
 	}
 	
 	/**

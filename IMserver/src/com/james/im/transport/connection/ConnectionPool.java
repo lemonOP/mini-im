@@ -59,9 +59,9 @@ public class ConnectionPool {
 			if (tempconnectionPool.size() > CONNECTION_NUMBER)
 				return 0;
 			boolean isContains = tempconnectionPool.containsKey(key);
+			w.lock();
 			if (isContains) {
 				remove(key);
-				w.lock();
 				tempconnectionPool.put(key, value);
 			} else {
 				tempconnectionPool.put(key, value);
