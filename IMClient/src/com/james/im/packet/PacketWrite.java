@@ -79,7 +79,7 @@ public class PacketWrite implements IPacket {
 						try {
 							packet = linkedBlockingQueue.take();
 							if(packet != null){
-							 byte[] buffer = PacketUtil.newInstance().toBuffer(packet.getMessageLen(), packet.getMessageType(), packet.getMessageBody());
+							 byte[] buffer = PacketUtil.newInstance().toBuffer(packet.getMessageType(), packet.getMessageBody());
 							 try {
 								outputStream.write(buffer, 0, buffer.length);
 								outputStream.flush();

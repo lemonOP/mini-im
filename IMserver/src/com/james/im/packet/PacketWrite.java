@@ -48,7 +48,6 @@ public class PacketWrite implements IPacket {
 						packet = linkedBlockingQueue.take();
 						if (packet != null) {
 							byte[] buffer = PacketUtil.newInstance().toBuffer(
-									packet.getMessageLen(),
 									packet.getMessageType(),
 									packet.getMessageBody());
 							try {

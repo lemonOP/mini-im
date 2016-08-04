@@ -1,5 +1,7 @@
 package com.james.im.packet;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * 数据包
  * @author james
@@ -42,7 +44,10 @@ public class Packet {
 	 * @param buffer
 	 */
 	public void setInBody(byte[] buffer){
-		this.messageBody = buffer;
+		byte[] messageTypeBuffer = ArrayUtils.subarray(buffer, 0, 1);// 可自行添加 需要的内容
+		this.messageType = PacketUtil.newInstance().headBufferToMessageType(messageTypeBuffer);
+		byte[] messageContentBuffer =  ArrayUtils.subarray(buffer, 1, buffer.length);
+		this.messageBody = messageContentBuffer;
 	}
 	
 	
@@ -65,7 +70,6 @@ public class Packet {
 	public int getMessageLen() {
 		return messageLen;
 	}
-
 
 
 	public void setMessageLen(int messageLen) {

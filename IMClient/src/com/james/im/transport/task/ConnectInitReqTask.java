@@ -6,6 +6,7 @@ import com.james.im.message.IMServerMessageProtocol.ConnectInitRequest;
 import com.james.im.message.IMServerMessageProtocol.MessageType;
 import com.james.im.packet.Packet;
 import com.james.im.transport.connection.manager.ConnectionManager;
+import com.james.minilog.MiniLog;
 
 
 /**

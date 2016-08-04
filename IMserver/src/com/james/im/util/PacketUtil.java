@@ -9,7 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
  * @author james
  * 
  */
-public class PacketUtil implements IUtil {
+public class PacketUtil implements IUtil{
 
 	private static volatile PacketUtil packetUtil;
 
@@ -35,12 +35,20 @@ public class PacketUtil implements IUtil {
 	 * @param messageBodyBuffer
 	 * @return
 	 */
-	public byte[] toBuffer(int head, int messageType,byte[] messageBodyBuffer) {
+	public byte[] toBuffer(int messageType,byte[] messageBodyBuffer) {
 		
-		byte[] headBuffer = intToByteArray(head);
+		
 		byte[] messageTypeBuffer = {(byte) messageType};
-		byte[] tempheadBuffer = ArrayUtils.addAll(headBuffer, messageTypeBuffer);
-		byte[] packetBuffer = ArrayUtils.addAll(tempheadBuffer,messageBodyBuffer);
+
+		byte[] bodyBuffer = ArrayUtils.addAll(messageTypeBuffer,messageBodyBuffer);
+		
+		//########################################//
+		
+		byte[] headBuffer = intToByteArray(bodyBuffer.length);
+		
+		byte[] packetBuffer = ArrayUtils.addAll(headBuffer, bodyBuffer);
+		
+		
 		return packetBuffer;
 	}
 	
@@ -57,6 +65,15 @@ public class PacketUtil implements IUtil {
 		return byteArrayToInt(messageBodyLen);
 	}
 
+	/**
+	 *  body buffer 转 messageType
+	 * 
+	 * @param buffer
+	 * @return
+	 */
+	public int headBufferToMessageType(byte[] buffer) {
+		return buffer[0];
+	}
 
 	
 	/**

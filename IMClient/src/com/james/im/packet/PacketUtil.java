@@ -36,12 +36,23 @@ public class PacketUtil {
 	 * @param messageBodyBuffer
 	 * @return
 	 */
-	public byte[] toBuffer(int head, int messageType,byte[] messageBodyBuffer) {
+	public byte[] toBuffer(int messageType,byte[] messageBodyBuffer) {
 		
-		byte[] headBuffer = intToByteArray(head);
+		
+		
+	
+		
 		byte[] messageTypeBuffer = {(byte) messageType};
-		byte[] tempheadBuffer = ArrayUtils.addAll(headBuffer, messageTypeBuffer);
-		byte[] packetBuffer = ArrayUtils.addAll(tempheadBuffer,messageBodyBuffer);
+
+		byte[] bodyBuffer = ArrayUtils.addAll(messageTypeBuffer,messageBodyBuffer);
+		
+		//########################################//
+		
+		byte[] headBuffer = intToByteArray(bodyBuffer.length);
+		
+		byte[] packetBuffer = ArrayUtils.addAll(headBuffer, bodyBuffer);
+		
+		
 		return packetBuffer;
 	}
 	
@@ -54,19 +65,18 @@ public class PacketUtil {
 	 * @return
 	 */
 	public int headBufferToMessageBodyLen(byte[] buffer) {
-		byte[] messageBodyLen = ArrayUtils.subarray(buffer, 0, 4);
-		return byteArrayToInt(messageBodyLen)-PacketConfiguration.HEADLEN;
+		byte[] messageBodyLen = ArrayUtils.subarray(buffer, 0, buffer.length);
+		return byteArrayToInt(messageBodyLen);
 	}
 
 	/**
-	 * 头buffer 转 messageType
+	 *  body buffer 转 messageType
 	 * 
 	 * @param buffer
 	 * @return
 	 */
 	public int headBufferToMessageType(byte[] buffer) {
-		byte[] messageTypeBuffer = ArrayUtils.subarray(buffer, 4, 5);
-		return messageTypeBuffer[0];
+		return buffer[0];
 	}
 
 	

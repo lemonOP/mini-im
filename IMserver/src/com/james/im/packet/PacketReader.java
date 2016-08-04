@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
+import com.james.im.message.IMServerMessageProtocol.ConnectInitRequest;
 import com.james.im.transport.connection.channel.Channel;
 import com.james.im.util.ThreadPoolUtil;
 import com.james.minilog.MiniLog;
@@ -63,6 +64,13 @@ public class PacketReader implements IPacket {
 								MiniLog.d(TAG, "tempMessageBodyCount"+tempMessageBodyCount);
 								if (tempMessageBodyCount == messageBodyArray.length) {
 									packet.setInBody(messageBodyArray);
+									
+									MiniLog.d(TAG, "message type"+packet.getMessageType());
+									//测试 
+									ConnectInitRequest connInit = ConnectInitRequest.parseFrom(packet.getMessageBody());
+									MiniLog.d(TAG, "NetworkEnvironment="+connInit.getNetworkEnvironment());
+									MiniLog.d(TAG, "ProtocolVersion"+connInit.getProtocolVersion());
+									MiniLog.d(TAG, "UserId"+connInit.getUserId());
 									// 回调消息
 									//backToListener(packet);
 								}else{
